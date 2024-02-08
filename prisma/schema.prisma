@@ -13,6 +13,23 @@ model Product {
   description String?
   active      Boolean @default(false)
   thumbnail   String
-  packshot    String @default("/uploads/")
+  packshot    String  @default("/uploads/")
   price       Decimal @default(0.00)
+  users       User[]  @relation("ProductUser")
+  wishlists   User[]  @relation("Userwishlist")
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  lastname  String
+  firstname String
+  mail      String
+  password  String
+  adress    String
+  zipcode   String
+  city      String
+  phone     String
+  isadmin   Boolean
+  commande  Product[] @relation("ProductUser")
+  wishlist  Product[] @relation("Userwishlist")
 }
