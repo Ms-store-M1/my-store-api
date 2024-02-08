@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = "file:./dev.db"
+  url      = "file: dev.db"
 }
 
 model Product {
@@ -15,4 +15,22 @@ model Product {
   thumbnail   String
   packshot    String @default("/uploads/")
   price       Decimal @default(0.00)
+  users       User[]   @relation("ProductUser")
+  wishlists   User[]   @relation("Userwishlist")
+ 
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  lastname  String
+  firstname String
+  mail      String
+  password  String
+  adress    String
+  zipcode   String
+  city      String
+  phone     String
+  commande  Product[] @relation("ProductUser")
+  wishlist  Product[] @relation("Userwishlist")
+  isadmin   Boolean
 }
