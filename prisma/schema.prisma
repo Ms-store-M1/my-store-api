@@ -32,5 +32,5 @@ model User {
   phone     String
   commande  Product[] @relation("ProductUser")
   wishlist  Product[] @relation("Userwishlist")
-  isadmin   Boolean
+  isadmin   Boolean @default(false)
 }
