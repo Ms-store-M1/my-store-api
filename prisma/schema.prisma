@@ -26,7 +26,7 @@ model User {
   firstname String
   mail      String
   password  String
-  adress    String
+  address    String
   zipcode   String
   city      String
   phone     String
