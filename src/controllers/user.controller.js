@@ -113,6 +113,17 @@ const addtoWishlist = async (req, res) => {
     }
 };
 
+const getorders = async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const orders = [];
+
+        res.json({ orders });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 
 
 
@@ -125,4 +136,5 @@ module.exports = {
     updateUser,
     deleteUser,
     addtoWishlist,
+    getorders
 };
