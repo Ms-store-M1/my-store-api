@@ -1,5 +1,7 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 
 const getAllUsers = async (req, res) => {
@@ -38,26 +40,40 @@ const getUserById = async (req, res) => {
 
 const createUser = async (req, res) => {
     try {
+        const { password, ...userData } = req.body;
+        const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = await prisma.user.create({
-            data: req.body
+            data: {
+                ...userData,
+                password: hashedPassword,
+            },
         });
-        res.status(201).json(newUser);
+
+        const token = jwt.sign({ userId: newUser.id }, process.env.JWT_SECRET, { expiresIn: '5h' });
+
+        res.status(201).json({ user: newUser, token });
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
 };
 
 const updateUser = async (req, res) => {
-    try {
+   try {
+        const { id } = req.params;
+        const { password, ...userData } = req.body;
         const updatedUser = await prisma.user.update({
-            where: { id: Number(req.params.id) },
-            data: req.body
+            where: { id: Number(id) },
+            data: {
+                ...userData,
+            },
         });
         res.json(updatedUser);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
+   
 };
+
 
 const deleteUser = async (req, res) => {
     try {
