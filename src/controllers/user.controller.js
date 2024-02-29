@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 
+
 const getAllUsers = async (req, res) => {
     try {
         const users = await prisma.user.findMany();
@@ -89,17 +90,24 @@ const deleteUser = async (req, res) => {
 };
 
 const addtoWishlist = async (req, res) => {
+    console.log("test");
     try {
-        const userId = req.user.id;
-        const { productId } = req.params;
+        console.log(req.params);
+        const { userId, productId } = req.params;
+        
+        // Convertir userId en entier
+        const userIdInt = parseInt(userId, 10);
+        
         const product = await prisma.product.findUnique({
             where: { id: Number(productId) },
         });
+        
         if (!product) {
             return res.status(404).json({ message: 'Produit non trouvé' });
         }
+
         await prisma.user.update({
-            where: { id: userId },
+            where: { id: userIdInt }, 
             data: {
                 wishlist: {
                     connect: { id: Number(productId) }
@@ -112,6 +120,7 @@ const addtoWishlist = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
 
 const getorders = async (req, res) => {
     try {
