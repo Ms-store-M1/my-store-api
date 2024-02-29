@@ -1,1 +1,1 @@
-web: node src/app.js
+web: npx prisma generate && node src/app.js
