@@ -16,18 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // cors
-app.use(
-  cors({
-    origin: config.frontend_url,
-  }),
-);
-
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://my-store-front-eight.vercel.app');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  next();
-});
+app.use(cors());
 
 // access to public folder
 app.use(express.static(`${__dirname}/public`));
