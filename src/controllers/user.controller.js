@@ -1,5 +1,8 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
 
 
 const getAllUsers = async (req, res) => {
@@ -38,26 +41,40 @@ const getUserById = async (req, res) => {
 
 const createUser = async (req, res) => {
     try {
+        const { password, ...userData } = req.body;
+        const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = await prisma.user.create({
-            data: req.body
+            data: {
+                ...userData,
+                password: hashedPassword,
+            },
         });
-        res.status(201).json(newUser);
+
+        const token = jwt.sign({ userId: newUser.id }, process.env.JWT_SECRET, { expiresIn: '5h' });
+
+        res.status(201).json({ user: newUser, token });
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
 };
 
 const updateUser = async (req, res) => {
-    try {
+   try {
+        const { id } = req.params;
+        const { password, ...userData } = req.body;
         const updatedUser = await prisma.user.update({
-            where: { id: Number(req.params.id) },
-            data: req.body
+            where: { id: Number(id) },
+            data: {
+                ...userData,
+            },
         });
         res.json(updatedUser);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
+   
 };
+
 
 const deleteUser = async (req, res) => {
     try {
@@ -72,10 +89,61 @@ const deleteUser = async (req, res) => {
     }
 };
 
+const addtoWishlist = async (req, res) => {
+    console.log("test");
+    try {
+        console.log(req.params);
+        const { userId, productId } = req.params;
+        
+        // Convertir userId en entier
+        const userIdInt = parseInt(userId, 10);
+        
+        const product = await prisma.product.findUnique({
+            where: { id: Number(productId) },
+        });
+        
+        if (!product) {
+            return res.status(404).json({ message: 'Produit non trouvé' });
+        }
+
+        await prisma.user.update({
+            where: { id: userIdInt }, 
+            data: {
+                wishlist: {
+                    connect: { id: Number(productId) }
+                }
+            }
+        });
+
+        res.json({ message: 'Produit ajouté à la wishlist avec succès' });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+
+const getorders = async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const orders = [];
+
+        res.json({ orders });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+
+
+
+
+
 module.exports = {
     getAllUsers,
     getUserById,
     createUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    addtoWishlist,
+    getorders
 };

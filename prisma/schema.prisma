@@ -20,27 +20,12 @@ model Product {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
-  lastname  String
-  firstname String
-  mail      String
-  password  String
-  adress    String
-  zipcode   String
-  city      String
-  phone     String
-  isadmin   Boolean
-  commande  Product[] @relation("ProductUser")
-  wishlist  Product[] @relation("Userwishlist")
-}
-
-model User {
   id        Int      @id @default(autoincrement())
   lastname  String
   firstname String
-  mail      String
+  mail      String   @unique
   password  String
-  address    String
+  address   String
   zipcode   String
   city      String
   phone     String
