@@ -17,6 +17,8 @@ model Product {
   price       Decimal @default(0.00)
   users       User[]  @relation("ProductUser")
   wishlists   User[]  @relation("Userwishlist")
+  cartItems   Cart[]  
+  orderdetails Order[]
 }
 
 model User {
@@ -32,4 +34,32 @@ model User {
   commande  Product[] @relation("ProductUser")
   wishlist  Product[] @relation("Userwishlist")
   isadmin   Boolean @default(false)
+  cartItems Cart[]
+  orderdetails Order[]
 }
+
+
+model Cart {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  productId Int
+  product   Product  @relation(fields: [productId], references: [id])
+  quantity  Int      @default(1)
+
+  @@unique([userId, productId])
+}
+
+model Order {
+  id              Int       @id @default(autoincrement())
+  userId          Int
+  user            User      @relation(fields: [userId], references: [id])
+  products        Product[] 
+  deliveryAddress String?   
+  deliveryMode    String //"livraison à domicile" ou "retrait en magasin"
+
+  @@map("orders")
+}
+
+
+
