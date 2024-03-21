@@ -7,7 +7,7 @@ const products = [
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
     active: true,
     thumbnail: 'https://archi-eval.s3.eu-north-1.amazonaws.com/products/product1.webp',
-    packshot: '/uploads/https://archi-eval.s3.eu-north-1.amazonaws.com/products/product1_packshot.jpeg',
+    packshot: 'https://archi-eval.s3.eu-north-1.amazonaws.com/products/product1_packshot.jpeg',
     price: 123.00
   },
   {
@@ -15,7 +15,7 @@ const products = [
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
     active: true,
     thumbnail: 'https://archi-eval.s3.eu-north-1.amazonaws.com/products/product2.webp',
-    packshot: '/uploads/https://archi-eval.s3.eu-north-1.amazonaws.com/products/product2_packshot.jpegs',
+    packshot: 'https://archi-eval.s3.eu-north-1.amazonaws.com/products/product2_packshot.jpeg',
     price: 136.00
   },
   {
@@ -23,7 +23,7 @@ const products = [
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
     active: true,
     thumbnail: 'https://archi-eval.s3.eu-north-1.amazonaws.com/products/product3.jpeg',
-    packshot: '/uploads/https://archi-eval.s3.eu-north-1.amazonaws.com/products/product3_packshot.jpeg',
+    packshot: 'https://archi-eval.s3.eu-north-1.amazonaws.com/products/product3_packshot.jpeg',
     price: 98.50
   },
   {
@@ -31,7 +31,7 @@ const products = [
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
     active: true,
     thumbnail: 'https://archi-eval.s3.eu-north-1.amazonaws.com/products/product4.jpeg',
-    packshot: '/uploads/https://archi-eval.s3.eu-north-1.amazonaws.com/products/product4_packshot.jpeg',
+    packshot: 'https://archi-eval.s3.eu-north-1.amazonaws.com/products/product4_packshot.jpeg',
     price: 65.00
   },
   {
@@ -39,7 +39,7 @@ const products = [
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
     active: true,
     thumbnail: 'https://archi-eval.s3.eu-north-1.amazonaws.com/products/product5.jpeg',
-    packshot: '/uploads/https://archi-eval.s3.eu-north-1.amazonaws.com/products/product5_packshot.jpeg',
+    packshot: 'https://archi-eval.s3.eu-north-1.amazonaws.com/products/product5_packshot.jpeg',
     price: 70.00
   },
   {
@@ -47,7 +47,7 @@ const products = [
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
     active: true,
     thumbnail: 'https://archi-eval.s3.eu-north-1.amazonaws.com/products/product6.jpeg',
-    packshot: '/uploads/https://archi-eval.s3.eu-north-1.amazonaws.com/products/product6_packshot.jpeg',
+    packshot: 'https://archi-eval.s3.eu-north-1.amazonaws.com/products/product6_packshot.jpeg',
     price: 90.00
   },
   {
@@ -55,7 +55,7 @@ const products = [
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
     active: true,
     thumbnail: 'https://archi-eval.s3.eu-north-1.amazonaws.com/products/product7.webp',
-    packshot: '/uploads/https://archi-eval.s3.eu-north-1.amazonaws.com/products/product7_packshot.jpeg',
+    packshot: 'https://archi-eval.s3.eu-north-1.amazonaws.com/products/product7_packshot.jpeg',
     price: 78.00
   },
   {
@@ -63,7 +63,7 @@ const products = [
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
     active: true,
     thumbnail: 'https://archi-eval.s3.eu-north-1.amazonaws.com/products/product8.webp',
-    packshot: '/uploads/https://archi-eval.s3.eu-north-1.amazonaws.com/products/product8_packshot.jpeg',
+    packshot: 'https://archi-eval.s3.eu-north-1.amazonaws.com/products/product8_packshot.jpeg',
     price: 152.99
   },
   {
@@ -71,7 +71,7 @@ const products = [
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
     active: true,
     thumbnail: 'https://archi-eval.s3.eu-north-1.amazonaws.com/products/product9.jpeg',
-    packshot: '/uploads/https://archi-eval.s3.eu-north-1.amazonaws.com/products/product9_packshot.jpeg',
+    packshot: 'https://archi-eval.s3.eu-north-1.amazonaws.com/products/product9_packshot.jpeg',
     price: 370.50
   }
 ];
