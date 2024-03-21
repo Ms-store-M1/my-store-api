@@ -29,50 +29,30 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-/**
- * @swagger
- * /users/{id}:
- *   get:
- *     summary: Récupère un utilisateur par son ID
- *     description: Retourne un utilisateur spécifique par son ID.
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: integer
- *     responses:
- *       200:
- *         description: Un utilisateur spécifique.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/User'
- *       404:
- *         description: Utilisateur non trouvé
- */
-const getUserById = async (req, res, next, throwError) => {
-  try {
-    const { id } = req.params;
-    if (!id) {
-      const err = throwError('No user id provided', 404);
-      next(err);
+const getUserById = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        if (!id) {
+            const err = throwError('No user id provided', 404);
+            next(err);
+        }
+        const user = await prisma.user.findUnique({
+            where: { id: Number(id) },
+        });
+        if (!user) {
+            const err = throwError('User not found', 404);
+            return next(err);
+        }
+        return res.json(
+            {
+                data: user,
+                sucess: true,
+            },
+        );
+    } catch (err) {
+        return next(err);
     }
-    const user = await prisma.user.findUnique({
-      where: { id: Number(id) },
-    });
-    if (!user) {
-      const err = throwError('User not found', 404);
-      return next(err);
-    }
-    return res.json({
-      data: user,
-      sucess: true,
-    });
-  } catch (err) {
-    return next(err);
-  }
-};
+}
 
 /**
  * @swagger
