@@ -16,11 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // cors
-app.use(
-  cors({
-    origin: config.frontend_url,
-  }),
-);
+app.use(cors());
 
 // access to public folder
 app.use(express.static(`${__dirname}/public`));
