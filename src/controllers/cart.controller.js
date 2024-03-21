@@ -84,9 +84,25 @@ const removeProductFromCart = async (req, res) => {
     }
 };
 
+const clearCart = async (req, res) => {
+    const { userId } = req.params;
+    try {
+        const userIntId = parseInt(userId, 10);
+        
+        await prisma.cart.deleteMany({
+            where: { userId: userIntId }
+        });
+        
+        res.json({ message: 'Tous les produits ont été supprimés du panier avec succès' });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 module.exports = {
   getCart,
   addToCart,
   updateCartItemQuantity,
-  removeProductFromCart
+  removeProductFromCart,
+  clearCart
 };
