@@ -57,6 +57,7 @@ model Order {
   products        Product[] 
   deliveryAddress String?   
   deliveryMode    String //"livraison à domicile" ou "retrait en magasin"
+  paymentDetails  String? 
 
   @@map("orders")
 }
