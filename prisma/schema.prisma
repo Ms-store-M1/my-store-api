@@ -21,6 +21,7 @@ model Product {
   orderdetails Order[]
 }
 
+
 model User {
   id        Int       @id @default(autoincrement())
   lastname  String
@@ -55,13 +56,13 @@ model Order {
   user            User      @relation(fields: [userId], references: [id])
   products        Product[]
   deliveryAddress String?
-  deliveryMode    String
+  deliveryMode    String      // "livraison à domicile" ou "retrait en magasin"
   paymentToken    String?
-  orderNumber     String
-  totalAmount     Decimal
-  totalItems      Int
+  orderNumber     String    
+  totalAmount     Decimal   
+  totalItems      Int       
   orderDate       DateTime
-  status          String
-
+  status          String    // Statut: payed / refund request / refunded
+  
   @@map("orders")
 }

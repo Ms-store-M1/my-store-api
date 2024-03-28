@@ -3,6 +3,7 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const throwError = require('../utils/throwError');
 
 /**
  * @swagger
@@ -30,29 +31,29 @@ const getAllUsers = async (req, res) => {
 };
 
 const getUserById = async (req, res, next) => {
-    try {
-        const { id } = req.params;
-        if (!id) {
-            const err = throwError('No user id provided', 404);
-            next(err);
-        }
-        const user = await prisma.user.findUnique({
-            where: { id: Number(id) },
-        });
-        if (!user) {
-            const err = throwError('User not found', 404);
-            return next(err);
-        }
-        return res.json(
-            {
-                data: user,
-                sucess: true,
-            },
-        );
-    } catch (err) {
-        return next(err);
+  try {
+    const { id } = req.params;
+    if (!id) {
+      const err = throwError('No user id provided', 404);
+      next(err);
     }
-}
+    const user = await prisma.user.findUnique({
+      where: { id: Number(id) },
+    });
+    if (!user) {
+      const err = throwError('User not found', 404);
+      return next(err);
+    }
+    return res.json(
+      {
+        data: user,
+        sucess: true,
+      },
+    );
+  } catch (err) {
+    return next(err);
+  }
+};
 
 /**
  * @swagger
@@ -167,7 +168,7 @@ const deleteUser = async (req, res) => {
  * /users/{userId}/wishlist/{productId}:
  *   post:
  *     summary: Ajoute un produit à la wishlist d'un utilisateur
- *     description: Ajoute un produit spécifié par son ID à la wishlist d'un utilisateur spécifié par son ID.
+ *     description: Ajoute un produit spécifié par son ID à la wishlist d'un utilisateur par son ID.
  *     parameters:
  *       - in: path
  *         name: userId
@@ -221,7 +222,7 @@ const addtoWishlist = async (req, res) => {
  * /users/{userId}/orders:
  *   get:
  *     summary: Récupère les commandes d'un utilisateur
- *     description: Retourne une liste de toutes les commandes passées par un utilisateur spécifié par son ID.
+ *     description: Retourne une liste de toutes les commandes passées d'un utilisateur par son ID.
  *     parameters:
  *       - in: path
  *         name: userId
@@ -236,6 +237,7 @@ const addtoWishlist = async (req, res) => {
  */
 const getorders = async (req, res) => {
   try {
+    // eslint-disable-next-line no-unused-vars
     const { userId } = req.params;
     const orders = [];
 
