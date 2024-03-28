@@ -21,6 +21,7 @@ model Product {
   orderdetails Order[]
 }
 
+
 model User {
   id        Int       @id @default(autoincrement())
   lastname  String
