@@ -60,7 +60,7 @@ model Order {
   orderNumber     String    
   totalAmount     Decimal   
   totalItems      Int       
-  orderDate       Date
+  orderDate       DateTime
   status          String    // Statut: payed / refund request / refunded
   
   @@map("orders")
