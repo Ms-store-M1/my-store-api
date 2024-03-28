@@ -18,6 +18,7 @@ model Product {
   users       User[]  @relation("ProductUser")
   wishlists   User[]  @relation("Userwishlist")
   cartItems   Cart[]  
+  orderdetails Order[]
 }
 
 model User {
@@ -46,3 +47,18 @@ model Cart {
 
   @@unique([userId, productId])
 }
+
+model Order {
+  id              Int       @id @default(autoincrement())
+  userId          Int
+  user            User      @relation(fields: [userId], references: [id])
+  products        Product[] 
+  deliveryAddress String?   
+  deliveryMode    String //"livraison à domicile" ou "retrait en magasin"
+  paymentToken    String?  
+
+  @@map("orders")
+}
+
+
+
