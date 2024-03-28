@@ -3,8 +3,6 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
   async function createCheckoutSession(req, res) {
     try {
       const {cart} = req.body;
-      console.log(req.body); // Pour voir tout le corps de la requête
-      console.log(req.body.cart);
       const lineItems = cart.map((item) => {
         return {
           price_data: {
@@ -33,7 +31,6 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
     }
   }
   
-
 module.exports = {
     createCheckoutSession,
 }
