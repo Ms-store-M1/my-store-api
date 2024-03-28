@@ -21,16 +21,15 @@ const login = async (req, res) => {
       id: user.id,
       isAdmin: user.isadmin,
     }, process.env.JWT_SECRET, {});
-    if (user) {
-      res.status(200).send({
-        auth: true,
-        token,
-        user,
-        message: 'Vous êtes connecté.',
-      });
-    }
+
+    return res.status(200).send({
+      auth: true,
+      token,
+      data: user,
+      message: 'Vous êtes connecté.',
+    });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };
 
