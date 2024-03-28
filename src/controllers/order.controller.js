@@ -45,6 +45,48 @@ const createOrder = async (req, res) => {
   }
 };
 
+const orderConfirmation = async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const order = await prisma.order.findUnique({
+      where: { id: parseInt(orderId, 10) },
+    });
+
+    res.json(order);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const getOrderById = async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const order = await prisma.order.findUnique({
+      where: { id: parseInt(orderId, 10) },
+    });
+
+    if (!order) {
+      return res.status(404).json({ message: `Order with id ${orderId} not found` });
+    }
+
+    res.json(order);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const getOrders = async (req, res) => {
+  try {
+    const orders = await prisma.order.findMany();
+    res.json(orders);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   createOrder,
+  getOrders ,
+  getOrderById,
+  orderConfirmation ,
 };
