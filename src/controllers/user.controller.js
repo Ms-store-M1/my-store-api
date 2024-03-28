@@ -237,6 +237,7 @@ const addtoWishlist = async (req, res) => {
  */
 const getorders = async (req, res) => {
   try {
+    // eslint-disable-next-line no-unused-vars
     const { userId } = req.params;
     const orders = [];
 

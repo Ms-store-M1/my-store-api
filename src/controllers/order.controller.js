@@ -101,4 +101,8 @@ const calculateTotalItems = (cartItems) => cartItems.reduce((total, cartItem) =>
 
 module.exports = {
   createOrder,
+  generateOrderNumber,
+  getOrders,
+  getOrderById,
+  orderConfirmation,
 };

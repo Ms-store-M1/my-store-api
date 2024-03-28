@@ -14,7 +14,7 @@ exports.getProducts = async (req, res, next) => {
       const err = throwError('No products found', 404);
       return next(err);
     }
-    return res.send(
+    return res.json(
       {
         success: true,
         data: products,
