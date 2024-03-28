@@ -56,13 +56,13 @@ model Order {
   user            User      @relation(fields: [userId], references: [id])
   products        Product[]
   deliveryAddress String?
-  deliveryMode    String // "livraison à domicile" ou "retrait en magasin"
+  deliveryMode    String      // "livraison à domicile" ou "retrait en magasin"
   paymentToken    String?
-  orderNumber     String
-  totalAmount     Decimal
-  totalItems      Int
+  orderNumber     String    
+  totalAmount     Decimal   
+  totalItems      Int       
   orderDate       DateTime
-  status          String // Statut: payé / demande de remboursement / remboursé
-
+  status          String    // Statut: payed / refund request / refunded
+  
   @@map("orders")
 }

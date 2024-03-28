@@ -1,10 +1,14 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable max-len */
 const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
 
 const createOrder = async (req, res) => {
   const { userId } = req.params;
-  const { deliveryMode, deliveryAddress, paymentToken } = req.body;
+  const {
+    deliveryMode, deliveryAddress, paymentToken, orderNumber,
+  } = req.body;
 
   try {
     // Récupérer le panier
@@ -13,7 +17,15 @@ const createOrder = async (req, res) => {
       include: { product: true },
     });
 
-    // Création de la cmd
+    // Calcul du totalItems et totalAmount
+    let totalItems = 0;
+    let totalAmount = 0;
+    cartItems.forEach((item) => {
+      totalItems += item.quantity;
+      totalAmount += item.product.price * item.quantity;
+    });
+
+    // Création de la commande
     const order = await prisma.order.create({
       data: {
         userId: parseInt(userId, 10),
@@ -21,13 +33,14 @@ const createOrder = async (req, res) => {
         deliveryMode,
         deliveryAddress: deliveryMode === 'livraison à domicile' ? deliveryAddress : null,
         paymentToken,
-        orderNumber: generateOrderNumber(),
-        totalAmount: calculateTotalAmount(cartItems),
-        totalItems: calculateTotalItems(cartItems),
-        orderDate: new Date(), // Date de commande actuelle
-        status: 'payé', // Statut initial de la cmd
+        orderNumber,
+        totalAmount,
+        totalItems,
+        orderDate: new Date(),
+        status: 'payé', // Statut initial de la commande
       },
     });
+
     // Vider le panier
     await prisma.cart.deleteMany({ where: { userId: parseInt(userId, 10) } });
 
@@ -61,9 +74,9 @@ const getOrderById = async (req, res) => {
       return res.status(404).json({ message: `Order with id ${orderId} not found` });
     }
 
-    res.json(order);
+    return res.json(order);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };
 
@@ -88,7 +101,4 @@ const calculateTotalItems = (cartItems) => cartItems.reduce((total, cartItem) =>
 
 module.exports = {
   createOrder,
-  orderConfirmation,
-  getOrderById,
-  getOrders,
 };
