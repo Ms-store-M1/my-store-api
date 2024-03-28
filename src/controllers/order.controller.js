@@ -24,7 +24,7 @@ const createOrder = async (req, res) => {
         totalAmount: calculateTotalAmount(cartItems), 
         totalItems: calculateTotalItems(cartItems), 
         orderDate: new Date(), // Date de commande actuelle
-        status: "pending" // Statut initial de la cmd
+        status: "payé" // Statut initial de la cmd
       },
     }); 
     // Vider le panier 
