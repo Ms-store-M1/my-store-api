@@ -22,8 +22,8 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
       const session = await stripe.checkout.sessions.create({
         line_items: lineItems,
         mode: 'payment',
-        success_url: `${process.env.FRONTEND_URL}/success.html`,
-        cancel_url: `${process.env.FRONTEND_URL}/cancel.html`,
+        success_url: `${process.env.FRONTEND_URL}/success`,
+        cancel_url: `${process.env.FRONTEND_URL}/cancel`,
       });
 
       res.json({ url: session.url }); // Envoyer l'URL de paiement au front-end
