@@ -1,3 +1,6 @@
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
+
 const createOrder = async (req, res) => {
   const { userId } = req.params;
   const { deliveryMode, deliveryAddress, paymentToken, orderNumber } = req.body;
@@ -40,4 +43,8 @@ const createOrder = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
+};
+
+module.exports = {
+  createOrder,
 };
