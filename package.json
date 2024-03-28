@@ -2,7 +2,7 @@
     "name": "app-store-api",
     "version": "1.0.0",
     "description": "",
-    "main": "app.js",
+    "main": "src/app.js",
     "dependencies": {
         "@prisma/client": "^5.4.1",
         "axios": "^1.6.8",

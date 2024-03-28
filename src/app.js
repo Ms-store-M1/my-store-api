@@ -16,7 +16,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // cors
-app.use(cors('*'));
+app.use(cors({
+  origin: 'http://localhost:3000',
+}));
 
 // access to public folder
 app.use(express.static(`${__dirname}/public`));
