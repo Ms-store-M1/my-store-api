@@ -50,6 +50,15 @@ const createOrder = async (req, res) => {
   }
 };
 
+const getOrders = async (req, res) => {
+  try {
+    const orders = await prisma.order.findMany();
+    res.json(orders);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 const orderConfirmation = async (req, res) => {
   try {
     const { orderId } = req.params;
@@ -80,28 +89,8 @@ const getOrderById = async (req, res) => {
   }
 };
 
-const getOrders = async (req, res) => {
-  try {
-    const orders = await prisma.order.findMany();
-    res.json(orders);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-const generateOrderNumber = () => {
-  const randomString = Math.random().toString(36).substring(2, 10).toUpperCase();
-  const timestamp = Date.now().toString().substring(6);
-  return `ORDER-${randomString}-${timestamp}`;
-};
-
-const calculateTotalAmount = (cartItems) => cartItems.reduce((total, cartItem) => total + (cartItem.product.price * cartItem.quantity), 0);
-
-const calculateTotalItems = (cartItems) => cartItems.reduce((total, cartItem) => total + cartItem.quantity, 0);
-
 module.exports = {
   createOrder,
-  generateOrderNumber,
   getOrders,
   getOrderById,
   orderConfirmation,
