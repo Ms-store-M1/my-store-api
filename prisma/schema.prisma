@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = "file: dev.db"
+  url      = "file:dev.db"
 }
 
 model Product {
@@ -55,13 +55,13 @@ model Order {
   user            User      @relation(fields: [userId], references: [id])
   products        Product[]
   deliveryAddress String?
-  deliveryMode    String // "livraison à domicile" ou "retrait en magasin"
+  deliveryMode    String
   paymentToken    String?
   orderNumber     String
   totalAmount     Decimal
   totalItems      Int
   orderDate       DateTime
-  status          String // Statut: payé / demande de remboursement / remboursé
+  status          String
 
   @@map("orders")
 }
