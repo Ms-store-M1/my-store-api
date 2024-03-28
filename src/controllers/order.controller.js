@@ -1,12 +1,20 @@
 const createOrder = async (req, res) => {
   const { userId } = req.params;
-  const { deliveryMode, deliveryAddress, paymentToken, orderNumber, totalAmount, totalItems } = req.body; // Ajoutez les nouveaux champs reçus
+  const { deliveryMode, deliveryAddress, paymentToken, orderNumber } = req.body;
 
   try {
     // Récupérer le panier 
     const cartItems = await prisma.cart.findMany({
       where: { userId: parseInt(userId, 10) },
       include: { product: true },
+    });
+
+    // Calcul du totalItems et totalAmount
+    let totalItems = 0;
+    let totalAmount = 0;
+    cartItems.forEach(item => {
+      totalItems += item.quantity;
+      totalAmount += item.product.price * item.quantity;
     });
 
     // Création de la commande
@@ -24,6 +32,7 @@ const createOrder = async (req, res) => {
         status: "payé" // Statut initial de la commande
       },
     }); 
+
     // Vider le panier 
     await prisma.cart.deleteMany({ where: { userId: parseInt(userId, 10) } });
 
