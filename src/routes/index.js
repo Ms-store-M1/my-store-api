@@ -11,6 +11,6 @@ router.use('/products', productRoute);
 router.use('/users', userRoute);
 router.use('/auth', authRoute);
 router.use('/order', orderRoute);
-router.use('/refund',refundRoute);
+router.use('/refund', refundRoute);
 
 module.exports = router;
