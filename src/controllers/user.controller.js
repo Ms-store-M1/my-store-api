@@ -39,6 +39,10 @@ const getUserById = async (req, res, next) => {
     }
     const user = await prisma.user.findUnique({
       where: { id: Number(id) },
+      include: {
+        commande: true,
+        wishlist: true
+      }
     });
     if (!user) {
       const err = throwError('User not found', 404);

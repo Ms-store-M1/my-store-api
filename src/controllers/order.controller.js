@@ -5,7 +5,8 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 const createOrder = async (req, res) => {
-  const { userId } = req.params;
+  //const { userId } = req.params;
+  const userId = req.query.userId;
   const {
     deliveryMode, deliveryAddress, paymentToken, orderNumber,
   } = req.body;
@@ -50,35 +51,6 @@ const createOrder = async (req, res) => {
   }
 };
 
-const orderConfirmation = async (req, res) => {
-  try {
-    const { orderId } = req.params;
-    const order = await prisma.order.findUnique({
-      where: { id: parseInt(orderId, 10) },
-    });
-
-    res.json(order);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-const getOrderById = async (req, res) => {
-  try {
-    const { orderId } = req.params;
-    const order = await prisma.order.findUnique({
-      where: { id: parseInt(orderId, 10) },
-    });
-
-    if (!order) {
-      return res.status(404).json({ message: `Order with id ${orderId} not found` });
-    }
-
-    return res.json(order);
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
-};
 
 const getOrders = async (req, res) => {
   try {
@@ -88,16 +60,6 @@ const getOrders = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
-const generateOrderNumber = () => {
-  const randomString = Math.random().toString(36).substring(2, 10).toUpperCase();
-  const timestamp = Date.now().toString().substring(6);
-  return `ORDER-${randomString}-${timestamp}`;
-};
-
-const calculateTotalAmount = (cartItems) => cartItems.reduce((total, cartItem) => total + (cartItem.product.price * cartItem.quantity), 0);
-
-const calculateTotalItems = (cartItems) => cartItems.reduce((total, cartItem) => total + cartItem.quantity, 0);
 
 const orderConfirmation = async (req, res) => {
   try {
@@ -129,14 +91,7 @@ const getOrderById = async (req, res) => {
   }
 };
 
-const getOrders = async (req, res) => {
-  try {
-    const orders = await prisma.order.findMany();
-    res.json(orders);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
+
 
 module.exports = {
   createOrder,
