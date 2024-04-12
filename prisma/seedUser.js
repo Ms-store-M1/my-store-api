@@ -1,4 +1,5 @@
 const { PrismaClient } = require('@prisma/client');
+
 const prisma = new PrismaClient();
 
 async function main() {
@@ -10,13 +11,13 @@ async function main() {
         lastname: 'Jesuis',
         firstname: 'Admin',
         mail: 'admin@gmail.com',
-        password: '$2b$10$z0jk25fdHMe.Fcfh12eUouIr8ZK4tyCRZR9wDlqODxYPrv/i.kcHu', //le meme mdp que d'hab
+        password: '$2b$10$z0jk25fdHMe.Fcfh12eUouIr8ZK4tyCRZR9wDlqODxYPrv/i.kcHu', // le meme mdp que d'hab
         address: 'test adresse',
         zipcode: '00000',
         city: 'Ville',
         phone: '0123456789',
-        isadmin: true
-      }
+        isadmin: true,
+      },
     });
 
     // Insérer l'utilisateur normal
@@ -26,13 +27,13 @@ async function main() {
         lastname: 'Nom',
         firstname: 'Prénom',
         mail: 'notadmin@gmail.com',
-        password: '$2b$10$z0jk25fdHMe.Fcfh12eUouIr8ZK4tyCRZR9wDlqODxYPrv/i.kcHu', //le meme mdp que d'hab
+        password: '$2b$10$z0jk25fdHMe.Fcfh12eUouIr8ZK4tyCRZR9wDlqODxYPrv/i.kcHu', // le meme mdp que d'hab
         address: 'test adresse 2',
         zipcode: '00000',
         city: 'Ville',
         phone: '0123456789',
-        isadmin: false
-      }
+        isadmin: false,
+      },
     });
 
     console.log('Utilisateurs insérés avec succès.');
