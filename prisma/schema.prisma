@@ -8,16 +8,16 @@ datasource db {
 }
 
 model Product {
-  id           Int     @id @default(autoincrement())
-  name         String
-  description  String?
-  active       Boolean @default(false)
-  thumbnail    String
-  packshot     String  @default("/uploads/")
-  price        Decimal @default(0.00)
-  users        User[]  @relation("ProductUser")
-  wishlists    User[]  @relation("Userwishlist")
-  cartItems    Cart[]
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String?
+  active      Boolean @default(false)
+  thumbnail   String
+  packshot    String  @default("/uploads/")
+  price       Decimal @default(0.00)
+  users       User[]  @relation("ProductUser")
+  wishlists   User[]  @relation("Userwishlist")
+  cartItems   Cart[]  
   orderdetails Order[]
 }
 
@@ -36,8 +36,9 @@ model User {
   wishlist  Product[] @relation("Userwishlist")
   isadmin   Boolean   @default(false)
   cartItems Cart[]
-  Order     Order[]
+  orderdetails Order[]
 }
+
 
 model Cart {
   id        Int     @id @default(autoincrement())
@@ -66,3 +67,7 @@ model Order {
   
   @@map("orders")
 }
+
+
+
+
