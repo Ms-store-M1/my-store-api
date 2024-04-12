@@ -4,28 +4,29 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = "file: dev.db"
+  url      = "file:dev.db"
 }
 
 model Product {
-  id          Int     @id @default(autoincrement())
-  name        String
-  description String?
-  active      Boolean @default(false)
-  thumbnail   String
-  packshot    String  @default("/uploads/")
-  price       Decimal @default(0.00)
-  users       User[]  @relation("ProductUser")
-  wishlists   User[]  @relation("Userwishlist")
-  cartItems   Cart[]  
+  id           Int     @id @default(autoincrement())
+  name         String
+  description  String?
+  active       Boolean @default(false)
+  thumbnail    String
+  packshot     String  @default("/uploads/")
+  price        Decimal @default(0.00)
+  users        User[]  @relation("ProductUser")
+  wishlists    User[]  @relation("Userwishlist")
+  cartItems    Cart[]
   orderdetails Order[]
 }
 
+
 model User {
-  id        Int      @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   lastname  String
   firstname String
-  mail      String   @unique
+  mail      String    @unique
   password  String
   address   String
   zipcode   String
@@ -33,19 +34,19 @@ model User {
   phone     String
   commande  Product[] @relation("ProductUser")
   wishlist  Product[] @relation("Userwishlist")
-  isadmin   Boolean @default(false)
+  isadmin   Boolean   @default(false)
   cartItems Cart[]
   orderdetails Order[]
 }
 
 
 model Cart {
-  id        Int      @id @default(autoincrement())
+  id        Int     @id @default(autoincrement())
   userId    Int
-  user      User     @relation(fields: [userId], references: [id])
+  user      User    @relation(fields: [userId], references: [id])
   productId Int
-  product   Product  @relation(fields: [productId], references: [id])
-  quantity  Int      @default(1)
+  product   Product @relation(fields: [productId], references: [id])
+  quantity  Int     @default(1)
 
   @@unique([userId, productId])
 }
@@ -56,17 +57,13 @@ model Order {
   user            User      @relation(fields: [userId], references: [id])
   products        Product[]
   deliveryAddress String?
-  deliveryMode    String    // "livraison à domicile" ou "retrait en magasin"
+  deliveryMode    String      // "livraison à domicile" ou "retrait en magasin"
   paymentToken    String?
   orderNumber     String    
   totalAmount     Decimal   
   totalItems      Int       
-  orderDate       DateTime  
-  status          String    // Statut: payé / demande de remboursement / remboursé
+  orderDate       DateTime
+  status          String    // Statut: payed / refund request / refunded
   
   @@map("orders")
 }
-
-
-
-
