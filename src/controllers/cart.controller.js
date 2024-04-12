@@ -20,25 +20,49 @@ const getCart = async (req, res) => {
   }
 };
 
+
 const addToCart = async (req, res) => {
   const { userId, productId, quantity } = req.body;
   try {
     const userIntId = parseInt(userId, 10);
     const productIntId = parseInt(productId, 10);
+    const quantityInt = parseInt(quantity, 10);
 
-    const cartItem = await prisma.cart.create({
-      data: {
-        userId: userIntId,
-        productId: productIntId,
-        quantity,
+    // Vérifier si le produit est déjà dans le panier de l'utilisateur
+    const existingCartItem = await prisma.cart.findUnique({
+      where: {
+        userId_productId: {
+          userId: userIntId,
+          productId: productIntId,
+        },
       },
     });
 
-    res.json(cartItem);
+    if (existingCartItem) {
+      // Si le produit existe déjà, mettre à jour la quantité
+      const updatedCartItem = await prisma.cart.update({
+        where: { id: existingCartItem.id },
+        data: { quantity: existingCartItem.quantity + quantityInt },
+      });
+      
+      return res.json(updatedCartItem);
+    } else {
+      // Si le produit n'existe pas, créer une nouvelle entrée dans le panier
+      const cartItem = await prisma.cart.create({
+        data: {
+          userId: userIntId,
+          productId: productIntId,
+          quantity: quantityInt,
+        },
+      });
+      
+      return res.json(cartItem);
+    }
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 const updateCartItemQuantity = async (req, res) => {
   const { userId, productId, quantity } = req.body;
