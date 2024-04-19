@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 const express = require("express");
 const productRoute = require("./product.route");
 const userRoute = require("./user.route");
