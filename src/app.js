@@ -9,8 +9,11 @@ const routes = require("./routes");
 
 const app = express();
 
-// parse json request body
-app.use(express.json());
+app.use(express.json({
+  verify: (req, res, buf) => {
+      req.rawBody = buf;
+  }
+}));
 
 // parse urlencoded request body
 app.use(express.urlencoded({ extended: true }));
