@@ -7,22 +7,6 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const throwError = require("../utils/throwError");
 
-/**
- * @swagger
- * /users:
- *   get:
- *     summary: Récupère tous les utilisateurs
- *     description: Retourne une liste de tous les utilisateurs.
- *     responses:
- *       200:
- *         description: Une liste de tous les utilisateurs.
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/User'
- */
 const getAllUsers = async (req, res) => {
     try {
         const users = await prisma.user.findMany();
@@ -55,22 +39,6 @@ const getUserById = async (req, res, next) => {
     }
 };
 
-/**
- * @swagger
- * /users/create:
- *   post:
- *     summary: Crée un nouvel utilisateur
- *     description: Enregistre un nouvel utilisateur dans la base de données.
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/UserCreate'
- *     responses:
- *       201:
- *         description: Utilisateur créé avec succès
- */
 const createUser = async (req, res) => {
     try {
         const { password, ...userData } = req.body;
@@ -92,30 +60,6 @@ const createUser = async (req, res) => {
     }
 };
 
-/**
- * @swagger
- * /users/update/{id}:
- *   put:
- *     summary: Met à jour un utilisateur
- *     description: Met à jour les informations d'un utilisateur existant.
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: integer
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/UserUpdate'
- *     responses:
- *       200:
- *         description: Utilisateur mis à jour avec succès
- *       404:
- *         description: Utilisateur non trouvé
- */
 const updateUser = async (req, res) => {
     try {
         const { id } = req.params;
@@ -132,24 +76,6 @@ const updateUser = async (req, res) => {
     }
 };
 
-/**
- * @swagger
- * /users/delete/{id}:
- *   delete:
- *     summary: Supprime un utilisateur
- *     description: Supprime un utilisateur de la base de données par son ID.
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: integer
- *     responses:
- *       200:
- *         description: Utilisateur supprimé avec succès
- *       404:
- *         description: Utilisateur non trouvé
- */
 const deleteUser = async (req, res) => {
     const userId = Number(req.params.id);
     if (!userId) {
@@ -173,29 +99,6 @@ const deleteUser = async (req, res) => {
     }
 };
 
-/**
- * @swagger
- * /users/{userId}/wishlist/{productId}:
- *   post:
- *     summary: Ajoute un produit à la wishlist d'un utilisateur
- *     description: Ajoute un produit spécifié par son ID à la wishlist d'un utilisateur par son ID.
- *     parameters:
- *       - in: path
- *         name: userId
- *         required: true
- *         schema:
- *           type: integer
- *       - in: path
- *         name: productId
- *         required: true
- *         schema:
- *           type: integer
- *     responses:
- *       200:
- *         description: Produit ajouté à la wishlist avec succès
- *       404:
- *         description: Produit ou utilisateur non trouvé
- */
 const addtoWishlist = async (req, res) => {
     try {
         console.log(req.params);
@@ -227,24 +130,6 @@ const addtoWishlist = async (req, res) => {
     }
 };
 
-/**
- * @swagger
- * /users/{userId}/orders:
- *   get:
- *     summary: Récupère les commandes d'un utilisateur
- *     description: Retourne une liste de toutes les commandes passées d'un utilisateur par son ID.
- *     parameters:
- *       - in: path
- *         name: userId
- *         required: true
- *         schema:
- *           type: integer
- *     responses:
- *       200:
- *         description: Liste des commandes de l'utilisateur
- *       404:
- *         description: Aucune commande trouvée pour cet utilisateur
- */
 const getorders = async (req, res) => {
     try {
         // eslint-disable-next-line no-unused-vars

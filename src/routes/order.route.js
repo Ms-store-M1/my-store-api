@@ -1,7 +1,7 @@
-const express = require('express');
+const express = require("express");
 
 const router = express.Router();
-const orderController = require('../controllers/order.controller');
+const orderController = require("../controllers/order.controller");
 
 /**
  * @swagger
@@ -19,7 +19,7 @@ const orderController = require('../controllers/order.controller');
  *       201:
  *         description: Commande créée avec succès.
  */
-router.post('/createorder', orderController.createOrder);
+router.post("/createorder", orderController.createOrder);
 
 /**
  * @swagger
@@ -40,7 +40,7 @@ router.post('/createorder', orderController.createOrder);
  *       404:
  *         description: Commande non trouvée.
  */
-router.get('/confirmation/:orderId', orderController.orderConfirmation);
+router.get("/confirmation/:orderId", orderController.orderConfirmation);
 
 /**
  * @swagger
@@ -65,7 +65,7 @@ router.get('/confirmation/:orderId', orderController.orderConfirmation);
  *       404:
  *         description: Commande non trouvée.
  */
-router.get('/getorder/:orderId', orderController.getOrderById);
+router.get("/getorder/:orderId", orderController.getOrderById);
 
 /**
  * @swagger
@@ -83,6 +83,6 @@ router.get('/getorder/:orderId', orderController.getOrderById);
  *               items:
  *                 $ref: '#/components/schemas/Order'
  */
-router.get('/getorders', orderController.getOrders);
+router.get("/getorders", orderController.getOrders);
 
 module.exports = router;
