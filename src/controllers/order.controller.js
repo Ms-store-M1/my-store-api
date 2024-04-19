@@ -5,7 +5,8 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 const createOrder = async (req, res) => {
-  const { userId } = req.params;
+  //const { userId } = req.params;
+  const userId = req.query.userId;
   const {
     deliveryMode, deliveryAddress, paymentToken, orderNumber,
   } = req.body;
@@ -83,15 +84,17 @@ const getOrderById = async (req, res) => {
       return res.status(404).json({ message: `Order with id ${orderId} not found` });
     }
 
-    return res.json(order);
+    res.json(order);
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
+
+
 module.exports = {
   createOrder,
-  getOrders,
+  getOrders ,
   getOrderById,
-  orderConfirmation,
+  orderConfirmation ,
 };
