@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 // cors
 app.use(
     cors({
-        origin: "https://my-store-api-uq4g.onrender.com",
+        origin: "https://my-store-front-8fp8e758l-m1devfront.vercel.app",
     })
 );
 
