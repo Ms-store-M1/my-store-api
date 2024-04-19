@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 // cors
 app.use(
     cors({
-        origin: "http://localhost:3000",
+        origin: "https://my-store-api-uq4g.onrender.com",
     })
 );
 
