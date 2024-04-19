@@ -10,3 +10,7 @@ npx prisma studio
 ## generate schema in db
 prisma migrate dev
 
+## Compte Gmail 
+
+mystore.noreply2@gmail.com
+Mystorenoreply2+

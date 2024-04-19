@@ -6,6 +6,8 @@ const prisma = new PrismaClient();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const throwError = require("../utils/throwError");
+const { sendEmail } = require('../controllers/nodemailer.controller');
+
 
 const getAllUsers = async (req, res) => {
     try {
@@ -59,6 +61,16 @@ const createUser = async (req, res) => {
         const token = jwt.sign({ userId: newUser.id }, process.env.JWT_SECRET, {
             expiresIn: "5h",
         });
+
+        // Envoi d'un e-mail de confirmation à l'utilisateur
+        const userSubject = 'Confirmation d\'inscription';
+        const userText = `Bonjour ${userData.firstname}, merci pour votre inscription sur notre site.`;
+        await sendEmail(userData.mail, userSubject, userText);
+                
+        // Envoi d'un e-mail à l'administrateur
+        const adminSubject = 'Nouvelle inscription sur le site';
+        const adminText = `${userData.firstname} ${userData.lastname} s'est inscrit sur le site avec l'adresse e-mail : ${userData.mail}.`;
+        await sendEmail('mystore.noreply2@gmail.com', adminSubject, adminText);
 
         res.status(201).json({ user: newUser, token });
     } catch (error) {
