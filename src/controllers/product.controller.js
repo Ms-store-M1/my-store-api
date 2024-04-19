@@ -2,7 +2,7 @@
 /* eslint-disable object-curly-newline */
 /* eslint-disable indent */
 /* eslint-disable quotes */
-const { PrismaClient } = require("@prisma/client/edge");
+const { PrismaClient } = require("@prisma/client");
 
 const throwError = require("../utils/throwError");
 
