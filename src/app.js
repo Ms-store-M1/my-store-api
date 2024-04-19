@@ -18,11 +18,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // cors
-app.use(
-    cors({
-        origin: "https://my-store-front-eight.vercel.app/",
-    })
-);
+// CORS options
+const corsOptions = {
+    origin: 'https://my-store-front-eight.vercel.app', // Set your frontend origin
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+
+app.use(cors(corsOptions));
 
 // access to public folder
 app.use(express.static(`${__dirname}/public`));
